@@ -344,6 +344,74 @@
     }
 
     /* ═══════════════════════════════
+       YOUTUBE CARD
+    ═══════════════════════════════ */
+    .citem-yt {
+      grid-column: 1 / -1;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      transition: border-color .2s, box-shadow .2s;
+      text-decoration: none;
+    }
+    .citem-yt:hover {
+      border-color: #C62828;
+      box-shadow: 0 6px 24px rgba(198,40,40,.10);
+    }
+
+    .yt-thumb {
+      flex-shrink: 0;
+      width: 72px;
+      height: 52px;
+      background: #1a0000;
+      border-radius: 6px;
+      border: 1px solid rgba(198,40,40,.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .yt-info { flex: 1; min-width: 0; }
+
+    .yt-label {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #EF5350;
+      margin-bottom: 5px;
+    }
+
+    .yt-title {
+      font-size: 14px;
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    .yt-url {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 3px;
+      word-break: break-all;
+    }
+
+    .yt-arrow {
+      flex-shrink: 0;
+      color: var(--muted);
+      font-size: 18px;
+      transition: transform .2s, color .2s;
+    }
+    .citem-yt:hover .yt-arrow {
+      transform: translateX(3px);
+      color: #EF5350;
+    }
+
+    /* ═══════════════════════════════
        FOOTER
     ═══════════════════════════════ */
     footer {
@@ -530,7 +598,7 @@
           <div>
             <p class="citem-label">GitHub</p>
             <p class="citem-value">
-              <a href="[URL de GitHub]" target="_blank" rel="noopener">[URL de GitHub]</a>
+              <a href="https://github.com/CamiloDocente32/CV_3" target="_blank" rel="noopener">github.com/CamiloDocente32/CV_3</a>
             </p>
           </div>
         </div>
@@ -544,6 +612,23 @@
             </p>
           </div>
         </div>
+
+        <!-- YouTube -->
+        <a class="citem-yt" href="https://www.youtube.com/watch?v=1IM5-tpfyw4" target="_blank" rel="noopener">
+          <div class="yt-thumb">
+            <!-- YouTube play icon SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
+              <rect width="24" height="24" rx="5" fill="#FF0000" opacity=".9"/>
+              <polygon points="9.5,7.5 9.5,16.5 17,12" fill="#fff"/>
+            </svg>
+          </div>
+          <div class="yt-info">
+            <p class="yt-label">YouTube · Video</p>
+            <p class="yt-title">Ver mi video en YouTube</p>
+            <p class="yt-url">youtube.com/watch?v=1IM5-tpfyw4</p>
+          </div>
+          <span class="yt-arrow">→</span>
+        </a>
 
         <div class="citem">
           <span class="citem-icon">📍</span>
