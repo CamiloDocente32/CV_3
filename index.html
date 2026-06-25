@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Camilo Naranjo Mejía — Business Intelligence</title>
+  <style>
+    /* ═══════════════════════════════
+       TOKENS
+    ═══════════════════════════════ */
+    :root {
+      --bg:          #07090F;
+      --navy:        #0B1526;
+      --card:        #0F1D33;
+      --border:      #162848;
+      --border-hover:#1E5799;
+      --blue-deep:   #1255A0;
+      --blue:        #1976D2;
+      --blue-mid:    #42A5F5;
+      --blue-soft:   #90CAF9;
+      --white:       #FFFFFF;
+      --text:        #D6E4F7;
+      --muted:       #6A8CAE;
+      --tag-bg:      rgba(25,118,210,0.10);
+      --tag-border:  rgba(66,165,245,0.22);
+      --serif:       Georgia,'Times New Roman',serif;
+      --mono:        'Courier New',Courier,monospace;
+      --sans:        -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    }
+
+    /* ═══════════════════════════════
+       RESET
+    ═══════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--blue-mid); text-decoration: none; transition: color .15s; }
+    a:hover { color: var(--blue-soft); }
+
+    /* ═══════════════════════════════
+       LAYOUT
+    ═══════════════════════════════ */
+    .wrap {
+      width: 100%;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* ═══════════════════════════════
+       HERO
+    ═══════════════════════════════ */
+    .hero {
+      background: var(--navy);
+      border-bottom: 1px solid var(--border);
+      padding: 80px 0 68px;
+    }
+
+    .hero-inner {
+      display: flex;
+      align-items: center;
+      gap: 52px;
+    }
+
+    /* ── Photo ── */
+    .photo {
+      flex-shrink: 0;
+      width: 144px;
+      height: 144px;
+      border-radius: 50%;
+      background: var(--card);
+      border: 2px solid var(--blue);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+    .photo svg { opacity: .35; }
+    .photo-label {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    /* ── Copy ── */
+    .hero-copy { flex: 1; min-width: 0; }
+
+    .eyebrow {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--blue-mid);
+      margin-bottom: 14px;
+    }
+
+    .hero-name {
+      font-family: var(--serif);
+      font-size: clamp(28px, 5.5vw, 46px);
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.12;
+      margin-bottom: 12px;
+    }
+
+    .hero-title {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--muted);
+      letter-spacing: .04em;
+      margin-bottom: 22px;
+    }
+
+    /* ── Signature: animated data bars ── */
+    .bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 5px;
+      height: 30px;
+      margin-bottom: 22px;
+    }
+    .b {
+      width: 4px;
+      background: var(--blue);
+      border-radius: 2px 2px 0 0;
+      animation: lift 2s ease-in-out infinite alternate;
+      transform-origin: bottom;
+    }
+    .b:nth-child(1)  { height:38%; animation-delay:0s;      background:var(--blue-mid); }
+    .b:nth-child(2)  { height:72%; animation-delay:.12s; }
+    .b:nth-child(3)  { height:52%; animation-delay:.24s; }
+    .b:nth-child(4)  { height:93%; animation-delay:.36s;    background:var(--blue-soft); }
+    .b:nth-child(5)  { height:33%; animation-delay:.48s; }
+    .b:nth-child(6)  { height:66%; animation-delay:.60s; }
+    .b:nth-child(7)  { height:82%; animation-delay:.72s;    background:var(--blue-mid); }
+    .b:nth-child(8)  { height:44%; animation-delay:.84s; }
+    .b:nth-child(9)  { height:70%; animation-delay:.96s; }
+    .b:nth-child(10) { height:28%; animation-delay:1.08s;   background:var(--blue-soft); }
+    .b:nth-child(11) { height:88%; animation-delay:1.20s; }
+    .b:nth-child(12) { height:55%; animation-delay:1.32s; }
+    .b:nth-child(13) { height:40%; animation-delay:1.44s;   background:var(--blue-mid); }
+    .b:nth-child(14) { height:76%; animation-delay:1.56s; }
+
+    @keyframes lift {
+      from { transform: scaleY(.35); opacity:.45; }
+      to   { transform: scaleY(1);   opacity:.85; }
+    }
+    @media (prefers-reduced-motion: reduce) { .b { animation: none; } }
+
+    .hero-loc {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .pulse {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--blue-mid);
+      flex-shrink: 0;
+      animation: glow 2s ease-in-out infinite;
+    }
+    @keyframes glow {
+      0%,100% { box-shadow: 0 0 0 0 rgba(66,165,245,.5); }
+      50%      { box-shadow: 0 0 0 5px rgba(66,165,245,0); }
+    }
+
+    /* ═══════════════════════════════
+       SHARED SECTION STYLES
+    ═══════════════════════════════ */
+    .section {
+      padding: 68px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .sec-label {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--blue-mid);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .sec-label::after {
+      content: '';
+      display: block;
+      width: 48px;
+      height: 1px;
+      background: var(--blue-deep);
+    }
+
+    .sec-title {
+      font-family: var(--serif);
+      font-size: clamp(22px, 4vw, 32px);
+      color: var(--white);
+      font-weight: 700;
+      margin-bottom: 24px;
+      line-height: 1.2;
+    }
+
+    /* ═══════════════════════════════
+       BIO
+    ═══════════════════════════════ */
+    .bio-text {
+      font-size: 16px;
+      color: var(--text);
+      line-height: 1.85;
+      max-width: 740px;
+    }
+
+    /* ═══════════════════════════════
+       SERVICES
+    ═══════════════════════════════ */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(265px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 26px 24px;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+    }
+    .card:hover {
+      border-color: var(--blue);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(25,118,210,.12);
+    }
+
+    .card-icon {
+      width: 38px;
+      height: 38px;
+      background: rgba(25,118,210,.12);
+      border: 1px solid var(--tag-border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+      font-size: 18px;
+    }
+
+    .card-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 9px;
+    }
+
+    .card-desc {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 14px;
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: .04em;
+      color: var(--blue-mid);
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      border-radius: 4px;
+      padding: 3px 9px;
+    }
+
+    /* ═══════════════════════════════
+       CONTACT
+    ═══════════════════════════════ */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(255px, 1fr));
+      gap: 14px;
+    }
+
+    .citem {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: border-color .2s;
+    }
+    .citem:hover { border-color: var(--blue-deep); }
+
+    .citem-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: var(--tag-bg);
+      border: 1px solid var(--tag-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .citem-label {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+
+    .citem-value {
+      font-size: 14px;
+      color: var(--text);
+      word-break: break-all;
+    }
+    .citem-value a { color: var(--text); }
+    .citem-value a:hover { color: var(--blue-mid); }
+
+    .note {
+      font-size: 11.5px;
+      color: var(--muted);
+      margin-top: 3px;
+      display: block;
+    }
+
+    /* ═══════════════════════════════
+       FOOTER
+    ═══════════════════════════════ */
+    footer {
+      padding: 36px 28px;
+      text-align: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: .06em;
+    }
+
+    /* ═══════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════ */
+    @media (max-width: 640px) {
+      .hero       { padding: 52px 0 44px; }
+      .hero-inner { flex-direction: column; align-items: flex-start; gap: 28px; }
+      .photo      { width: 110px; height: 110px; }
+      .section    { padding: 52px 0; }
+      .grid       { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (min-width: 641px) and (max-width: 860px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ════════════════════════════
+       HERO
+  ════════════════════════════ -->
+  <header class="hero">
+    <div class="wrap">
+      <div class="hero-inner">
+
+        <!-- Placeholder foto -->
+        <div class="photo" role="img" aria-label="Foto de perfil — placeholder">
+          <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24"
+               fill="none" stroke="#90CAF9" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="4"/>
+            <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/>
+          </svg>
+          <span class="photo-label">[Tu foto]</span>
+        </div>
+
+        <!-- Nombre y título -->
+        <div class="hero-copy">
+          <p class="eyebrow">Portafolio Profesional · 2025</p>
+          <h1 class="hero-name">Camilo Arlex<br>Naranjo Mejía</h1>
+          <p class="hero-title">Analista Senior de Business Intelligence · Ingeniero Administrador</p>
+
+          <!-- Firma visual: barras animadas tipo mini-dashboard -->
+          <div class="bars" aria-hidden="true">
+            <span class="b"></span><span class="b"></span><span class="b"></span>
+            <span class="b"></span><span class="b"></span><span class="b"></span>
+            <span class="b"></span><span class="b"></span><span class="b"></span>
+            <span class="b"></span><span class="b"></span><span class="b"></span>
+            <span class="b"></span><span class="b"></span>
+          </div>
+
+          <p class="hero-loc">
+            <span class="pulse"></span>
+            Medellín, Colombia · Disponible para trabajo remoto
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- ════════════════════════════
+       BIO
+  ════════════════════════════ -->
+  <section class="section">
+    <div class="wrap">
+      <p class="sec-label">Sobre mí</p>
+      <h2 class="sec-title">Convirtiendo datos en decisiones</h2>
+      <p class="bio-text">
+        Ingeniero Administrador colombiano con más de 4 años de experiencia en Business Intelligence
+        y análisis de datos, especializado en transformar información compleja en decisiones estratégicas
+        de negocio. Diseño dashboards ejecutivos, construyo pipelines de datos, automatizo reportes y
+        desarrollo modelos predictivos que generan impacto real en operaciones comerciales, logísticas y
+        financieras. Actualmente cursando la Maestría en Inteligencia y Analítica de Datos en la
+        Universidad de los Andes, con enfoque en Machine Learning y ciencia de datos aplicada.
+      </p>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════
+       SERVICIOS
+  ════════════════════════════ -->
+  <section class="section">
+    <div class="wrap">
+      <p class="sec-label">Servicios</p>
+      <h2 class="sec-title">¿En qué puedo ayudarte?</h2>
+      <div class="grid">
+
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <p class="card-name">Dashboards Ejecutivos</p>
+          <p class="card-desc">Diseño y desarrollo de reportes interactivos en Power BI para KPIs comerciales, logísticos y financieros, con datos en tiempo real conectados a tu ERP o CRM.</p>
+          <span class="tag">Power BI · SQL Server · Azure SQL</span>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">⚙️</div>
+          <p class="card-name">Ingeniería de Datos & ETL</p>
+          <p class="card-desc">Diseño de pipelines que consolidan múltiples fuentes (ERP, CRM, archivos planos) en una sola fuente de verdad limpia y confiable para todo el equipo.</p>
+          <span class="tag">Pentaho · Azure Data Factory · Python</span>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🤖</div>
+          <p class="card-name">Modelos Predictivos & ML</p>
+          <p class="card-desc">Construcción de modelos de forecasting y machine learning para anticipar novedades en entregas, demanda de productos o comportamiento de clientes.</p>
+          <span class="tag">Scikit-learn · XGBoost · Random Forest</span>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <p class="card-name">Automatización de Reportes</p>
+          <p class="card-desc">Elimina horas de trabajo manual con flujos automáticos de generación y distribución de reportes mediante Python, Power Automate y n8n.</p>
+          <span class="tag">Power Automate · n8n · Python scripting</span>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🔍</div>
+          <p class="card-name">Análisis & Segmentación</p>
+          <p class="card-desc">Exploración de grandes volúmenes de datos para identificar patrones, segmentos de clientes, estacionalidad y oportunidades estratégicas de negocio.</p>
+          <span class="tag">SQL · Python · Dask · PostgreSQL</span>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">☁️</div>
+          <p class="card-name">Cloud Analytics (Azure)</p>
+          <p class="card-desc">Migración de datos on-premise a la nube y configuración de ambientes analíticos escalables con Azure SQL, Databricks y Azure Data Factory.</p>
+          <span class="tag">Azure · Databricks · SQL · Cloud</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════
+       CONTACTO
+  ════════════════════════════ -->
+  <section class="section">
+    <div class="wrap">
+      <p class="sec-label">Contacto</p>
+      <h2 class="sec-title">Hablemos de tu proyecto</h2>
+      <div class="contact-grid">
+
+        <div class="citem">
+          <span class="citem-icon">✉️</span>
+          <div>
+            <p class="citem-label">Email</p>
+            <p class="citem-value"><a href="mailto:canaranjom@gmail.com">canaranjom@gmail.com</a></p>
+          </div>
+        </div>
+
+        <div class="citem">
+          <span class="citem-icon">📱</span>
+          <div>
+            <p class="citem-label">Teléfono / WhatsApp</p>
+            <p class="citem-value"><a href="tel:+573183901042">(+57) 318 390 1042</a></p>
+          </div>
+        </div>
+
+        <div class="citem">
+          <span class="citem-icon">💼</span>
+          <div>
+            <p class="citem-label">LinkedIn</p>
+            <p class="citem-value">
+              <a href="[URL de LinkedIn]" target="_blank" rel="noopener">[URL de LinkedIn]</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="citem">
+          <span class="citem-icon">💻</span>
+          <div>
+            <p class="citem-label">GitHub</p>
+            <p class="citem-value">
+              <a href="[URL de GitHub]" target="_blank" rel="noopener">[URL de GitHub]</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="citem">
+          <span class="citem-icon">🗂️</span>
+          <div>
+            <p class="citem-label">Portafolio</p>
+            <p class="citem-value">
+              <a href="[URL de Portafolio]" target="_blank" rel="noopener">[URL de Portafolio]</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="citem">
+          <span class="citem-icon">📍</span>
+          <div>
+            <p class="citem-label">Ubicación</p>
+            <p class="citem-value">
+              Medellín, Colombia
+              <span class="note">Disponible para proyectos remotos</span>
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════
+       FOOTER
+  ════════════════════════════ -->
+  <footer>
+    © 2025 Camilo Arlex Naranjo Mejía · Business Intelligence & Data Analytics
+  </footer>
+
+</body>
+</html>
